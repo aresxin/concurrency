@@ -154,3 +154,22 @@ final class SyncExectuor: SerialExecutor {
     }
 }
 ```
+## Sendable
+[Swift 新并发框架之 Sendable](https://juejin.cn/post/7076741945820872717/) <br>
+
+[理解]
+``` ruby
+Sendable closure 是不能捕获 actor-isolated 属性，否则报错: Actor-isolated property 'x' can not be referenced from a Sendable closure。
+但 Task closure 是个例外，因为它本身也是 actor-isolated，所以下面的代码不会报错：
+public actor TestActor {
+  var value: Int = 0
+
+  func testTask() {
+    Task {
+      value = 1
+    }
+ }
+}
+```
+## TaskLocal
+[TaskLocal](https://www.bennyhuo.com/book/swift-coroutines/08-tasklocal.html) <br>
