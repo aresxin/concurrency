@@ -2,6 +2,61 @@
 concurrency research
 
 
+## async/await
+[Swift 新并发框架之 async/await](https://juejin.cn/post/7076733264798416926) <br>
+[将回调改写成 async 函数](https://www.bennyhuo.com/book/swift-coroutines/02-wrap-callback.html) <br>
+``` ruby
+提供2组函数一个抛出异常，一个不抛出异常
+public func withCheckedContinuation<T>(
+    function: String = #function, 
+    _ body: (CheckedContinuation<T, Never>) -> Void
+) async -> T
+
+public func withCheckedThrowingContinuation<T>(
+    function: String = #function, 
+    _ body: (CheckedContinuation<T, Error>) -> Void
+) async throws -> T
+```
+
+[理解]
+``` ruby
+await 暂停的是方法，而不是执行方法的线程；
+await 暂停点前后可能会发生线程切换。
+await 之所以称为『 潜在 』暂停点，而不是暂停点，是因为并不是所有的 await 都会暂停，只有遇到类似 IO、手动起子线程等情况时才会暂停当前调用栈的运行。
+如果 await后没有异步操作，会立刻返回结果。
+```
+[代码解析]
+``` ruby
+asyncConnect把connect方法改写成异步函数， transport.connect()调用之后开始真正的暂停，因为transport.connect()是子线程异步操作
+
+let c = try await MSession.default.asyncConnect()
+
+ public func connect(completionHandler: @escaping ConnectedCallback) {
+        guard !isConnected else {
+            completionHandler(.success(nil))
+            return
+        }
+        guard !isConnecting else {
+            connectedCallBackList.append(completionHandler)
+            return
+        }
+
+        connectedCallBackList.append(completionHandler)
+
+        transport.connect()
+        isConnecting = true
+    }
+    
+  public func asyncConnect() async throws -> Swift.Result<[String : String]?, MError>  {
+        return try await withCheckedThrowingContinuation { continuation in
+            connect { result in
+                continuation.resume(with: .success(result))
+            }
+        }
+    }
+```
+
+
 ## Task
 [Swift 新并发框架之 Task](https://juejin.cn/post/7084640887250092062/) <br>
 [在程序当中调用异步函数 Task](https://www.bennyhuo.com/book/swift-coroutines/03-call-async-func.html#%E4%BD%BF%E7%94%A8-task) <br>
@@ -14,7 +69,7 @@ Task 是线程的高级抽象，可以理解为创建一个线程Task，在这�
 [代码解析]
 ``` ruby
 因为这类是@MainActor，所以Task的环境继承mainactor，异步任务挂起和恢复都在主线程，异步任务恢复之后可以访问mainactor的isolated属性
-总结一下，Task在actor内会继承这个actor环境，Task里面的异步任务挂起和回复都在这个actor线程内，也可以访问这个actor的isolated属性
+总结一下，Task在actor内会继承这个actor环境，Task里面的异步任务挂起和恢复都在这个actor线程内，也可以访问这个actor的isolated属性
 @MainActor
 class RateDataSource: ObservableObject {
     weak var delegate : RateModelDelegate? = nil
