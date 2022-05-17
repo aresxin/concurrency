@@ -117,3 +117,40 @@ class RateDataSource: ObservableObject {
 }
 
 ``` 
+## actor
+[Swift 新并发框架之 actor](https://juejin.cn/post/7076738494869012494) <br>
+[GlobalActor 和异步函数的调度](https://www.bennyhuo.com/book/swift-coroutines/07-globalactor.html) <br>
+
+[理解]
+``` ruby
+Actor 代表一组在并发环境下可以安全访问的(可变)状态；
+Actor 通过所谓数据隔离 (Actor isolation) 的方式确保数据安全，其实现原理是 Actor 内部维护了一个串行队列 (mailbox)，所有涉及数据安全的外部调用都要入队，即它们都是串行执行的。
+```
+
+[代码解析]
+``` ruby
+自己实现一个actor这个actor的job都在穿行队列dispatcher执行。
+@globalActor actor SerialActor: GlobalActor {
+    typealias ActorType = SerialActor
+    static let shared: SerialActor = SerialActor()
+    private static let _sharedExecutor = SyncExectuor()
+    static let sharedUnownedExecutor: UnownedSerialExecutor = _sharedExecutor.asUnownedSerialExecutor()
+    let unownedExecutor: UnownedSerialExecutor = sharedUnownedExecutor
+}
+
+
+final class SyncExectuor: SerialExecutor {
+    private static let dispatcher: DispatchQueue = DispatchQueue(label: "momiji.session.actior")
+    
+    func enqueue(_ job: UnownedJob) {
+        print("enqueue")
+        SyncExectuor.dispatcher.async {
+            job._runSynchronously(on: self.asUnownedSerialExecutor())
+        }
+    }
+    
+    func asUnownedSerialExecutor() -> UnownedSerialExecutor {
+        UnownedSerialExecutor(ordinary: self)
+    }
+}
+```
