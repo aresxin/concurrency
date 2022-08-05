@@ -177,3 +177,13 @@ public actor TestActor {
 
 ## Instrument 14 swift concurrency 模板
 [WWDC22 110350 Swift 并发的可视化和优化](https://xiaozhuanlan.com/topic/0186237549) <br>
+
+Actor 模型
+Actor 模型是为了解决多线程访问共享数据造成的数据竞争问题，它将数据隔离在 Actor 外，从外部访问 Actor 数据时（我们称之为隔离域外），只能够异步地访问，并且 Actor 内部有串行执行器来保证访问是串行的。
+更多内容可以参考 WWDC21 Session Protect mutable state with Swift actors 和对应的内参文章 【WWDC21 10133】并发编程新利器 - Actor。
+
+Main Actor由于没有派发线程的概念，它可以把耗时任务交给其他普通的 Actor 执行
+普通Actor会开辟一个异步线程，线程里面的任务是串行执行，可以参考自定义actor。
+
+更多内容可以参考 WWDC21 Session Protect mutable state with Swift actors 和对应的内参文章 【WWDC21 10133】并发编程新利器 - Actor。A
+更多内容可以参考 WWDC21 Session Protect mutable state with Swift actors 和对应的内参文章 【WWDC21 10133】并发编程新利器 - Actor。
