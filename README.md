@@ -187,3 +187,6 @@ Main Actor由于没有派发线程的概念，它可以把耗时任务交给其�
 
 更多内容可以参考 WWDC21 Session Protect mutable state with Swift actors 和对应的内参文章 【WWDC21 10133】并发编程新利器 - Actor。A
 更多内容可以参考 WWDC21 Session Protect mutable state with Swift actors 和对应的内参文章 【WWDC21 10133】并发编程新利器 - Actor。
+
+## Ref
+[Swift Concurrency – Things They Don’t Tell You](https://wojciechkulik.pl/ios/swift-concurrency-things-they-dont-tell-you) <br>
