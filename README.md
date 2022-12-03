@@ -190,3 +190,5 @@ Main Actor由于没有派发线程的概念，它可以把耗时任务交给其�
 
 ## Ref
 [Swift Concurrency – Things They Don’t Tell You](https://wojciechkulik.pl/ios/swift-concurrency-things-they-dont-tell-you) <br>
+[Swift 中的 Async/Await ——代码实例详解](https://www.51cto.com/article/740241.html) <br>
+[Swift AsyncSequence — 代码实例详解](https://mp.weixin.qq.com/s/7HuYcMFCjqEhRHWlPc3ydA) <br>
