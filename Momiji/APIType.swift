@@ -1,10 +1,4 @@
-//
-//  APIType.swift
-//  Krampus
-//
-//  Created by yangjx on 2022/4/24.
-//  Copyright © 2022 nextop. All rights reserved.
-//
+
 
 import Foundation
 import UIKit
