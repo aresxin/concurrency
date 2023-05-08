@@ -1,10 +1,4 @@
-//
-//  MomijiTransport.swift
-//  Krampus
-//
-//  Created by yangjx on 2022/4/22.
-//  Copyright © 2022 nextop. All rights reserved.
-//
+
 
 import Foundation
 import Starscream
