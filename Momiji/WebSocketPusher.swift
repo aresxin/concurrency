@@ -1,10 +1,4 @@
-//
-//  WebSocketBridge.swift
-//  Krampus
-//
-//  Created by yangjx on 2022/4/19.
-//  Copyright © 2022 nextop. All rights reserved.
-//
+
 
 import Foundation
 import Combine
