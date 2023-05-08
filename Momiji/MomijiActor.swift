@@ -1,10 +1,4 @@
-//
-//  MomijiActor.swift
-//  Krampus
-//
-//  Created by yangjx on 2022/5/11.
-//  Copyright © 2022 nextop. All rights reserved.
-//
+
 
 import Foundation
  
